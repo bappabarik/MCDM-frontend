@@ -32,16 +32,16 @@ const App = () => {
 
   const calculateRankings = async () => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/calculate", {
+      const { data } = await axios.post(import.meta.env.VITE_CALCULATE_URL, {
         alternatives,
         weights,
         criteriaType
       });
 
       setRankings(data.rankings);
-      console.log(data.rankings);
       
     } catch (error) {
+      alert("Error calculating rankings:", error)
       console.error("Error calculating rankings:", error);
     }
   };
