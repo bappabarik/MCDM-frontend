@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileUpload from "./components/FileUpload";
 import WeightInput from "./components/WeightInput";
 import RankingChart from "./components/RankingChart";
@@ -9,11 +9,13 @@ const App = () => {
   const [alternatives, setAlternatives] = useState([]);
   const [weights, setWeights] = useState([]);
   const [rankings, setRankings] = useState([]);
+  const [criteriaType, setCriteriaType] = useState([]);
 
   const handleUploadSuccess = (data) => {
     setCriteria(data.criteria);
     setAlternatives(data.alternatives);
     setWeights(data.weights);
+    setCriteriaType(data.criteriaType)
   };
 
   const handleWeightChange = (idx, value) => {
@@ -22,16 +24,22 @@ const App = () => {
     setWeights(updatedWeights);
   };
 
+  const handleCriteriaChange = (idx, value) => {
+    const updatedCriteriaType = [...criteriaType];
+    updatedCriteriaType[idx] = value;
+    setCriteriaType(updatedCriteriaType)    
+  }
+
   const calculateRankings = async () => {
     try {
       const { data } = await axios.post("http://localhost:5000/api/calculate", {
         alternatives,
         weights,
-        criteriaType: Array(criteria.length).fill("benefit"), // default type
+        criteriaType
       });
 
       setRankings(data.rankings);
-      console.log(weights);
+      console.log(data.rankings);
       
     } catch (error) {
       console.error("Error calculating rankings:", error);
@@ -48,6 +56,8 @@ const App = () => {
           weights={weights}
           onWeightChange={handleWeightChange}
           onCalculate={calculateRankings}
+          onCriteriaTypeChange={handleCriteriaChange}
+          criteriaType={criteriaType}
         />
       )}
       {rankings.length > 0 && <RankingChart rankings={rankings} />}
