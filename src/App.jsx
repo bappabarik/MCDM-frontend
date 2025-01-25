@@ -24,14 +24,14 @@ const App = () => {
 
   const calculateRankings = async () => {
     try {
-      const { data } = await axios.post("https://mcdm.onrender.com/api/calculate", {
+      const { data } = await axios.post("http://localhost:5000/api/calculate", {
         alternatives,
         weights,
-        criteriaType: Array(criteria.length).fill("benefit"), // Assuming all criteria are benefit type
+        criteriaType: Array(criteria.length).fill("benefit"), // default type
       });
 
       setRankings(data.rankings);
-      console.log(data.rankings);
+      console.log(weights);
       
     } catch (error) {
       console.error("Error calculating rankings:", error);

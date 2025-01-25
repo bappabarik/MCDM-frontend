@@ -10,8 +10,9 @@ const FileUpload = ({ onUploadSuccess }) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const { data } = await axios.post("https://mcdm.onrender.com/api/upload", formData);
+    const { data } = await axios.post("http://localhost:5000/api/upload", formData);
     onUploadSuccess(data);
+    console.log(data)
   };
 
   return (

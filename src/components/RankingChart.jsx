@@ -2,7 +2,6 @@ import React from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-// Register necessary Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const RankingChart = ({ rankings }) => {
@@ -27,7 +26,7 @@ const RankingChart = ({ rankings }) => {
       },
       title: {
         display: true,
-        text: "MCDM Rankings",
+        text: "TOPSIS Rankings",
       },
     },
   };
